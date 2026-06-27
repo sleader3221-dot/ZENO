@@ -19,7 +19,7 @@
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/▶%20Live%20Demo-Open%20ZENO-6c63ff?style=for-the-badge&logo=googlechrome&logoColor=white)](https://sleader3221-dot.github.io/ZENO)
+[![Live Demo](https://img.shields.io/badge/▶%20Live%20Demo-Open%20ZENO-6c63ff?style=for-the-badge&logo=googlechrome&logoColor=white)](https://zeno-kappa-bice.vercel.app/)
 
 </div>
 
