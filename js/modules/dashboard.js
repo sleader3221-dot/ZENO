@@ -102,6 +102,7 @@ const DashboardModule = (() => {
     const completedGoals = goals.filter(g => g.completed).length;
     const recentMood = moods[0];
     const moodAvg = moods.length ? Math.round(moods.slice(0, 7).reduce((a, b) => a + (b.score || 3), 0) / Math.min(moods.length, 7) * 10) / 10 : null;
+    const liveContext = window.ZenoLive?.getCachedContext?.();
 
     return `
       <div class="page-enter">
@@ -144,6 +145,8 @@ const DashboardModule = (() => {
             <div class="quick-stat-bar"><div class="quick-stat-fill" style="width:${xpData.percent}%; background: var(--grad-gold);"></div></div>
           </div>
         </div>
+
+        ${renderLiveContextCard(liveContext)}
 
         <!-- AI Daily Insight -->
         <div class="ai-insight-card mb-xl">
@@ -270,6 +273,8 @@ const DashboardModule = (() => {
     const topInsight = document.getElementById('ai-insight-text');
     if (topInsight) topInsight.textContent = 'Your AI navigator is active and learning from your patterns 🧠';
 
+    hydrateDashboardLiveContext();
+
     // Goal interactions
     document.querySelectorAll('.goal-item').forEach(item => {
       const handler = () => {
@@ -310,6 +315,112 @@ const DashboardModule = (() => {
     const html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
     el.innerHTML = html;
     el.style.animation = 'fadeIn 0.5s ease';
+  }
+
+  function renderLiveContextCard(context) {
+    const weather = context?.weather;
+    const location = context?.location;
+    const resources = context?.resources || [];
+    const weatherText = weather
+      ? `${weather.emoji} ${weather.temperature}°F · ${weather.label}`
+      : 'Ready for live weather';
+    const place = location?.label ? location.label.split(',').slice(0, 3).join(', ') : 'Use your location for live context';
+    const updated = context?.cachedAt ? new Date(context.cachedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'Not synced yet';
+
+    return `
+      <div class="live-command-card mb-xl">
+        <div class="live-command-main">
+          <div class="live-kicker">Live Context Layer</div>
+          <h2>Real-world signals for smarter support</h2>
+          <p id="dashboard-live-status">${place}</p>
+        </div>
+        <div class="live-command-grid" id="dashboard-live-metrics">
+          <div class="live-command-metric">
+            <span>🌦️</span>
+            <strong>${weatherText}</strong>
+            <small>${weather?.rainChance !== null && weather?.rainChance !== undefined ? `${weather.rainChance}% rain chance` : 'Open-Meteo weather'}</small>
+          </div>
+          <div class="live-command-metric">
+            <span>🗺️</span>
+            <strong>${resources.length || 'Live'}</strong>
+            <small>nearby mapped resources</small>
+          </div>
+          <div class="live-command-metric">
+            <span>🕐</span>
+            <strong>${updated}</strong>
+            <small>last sync</small>
+          </div>
+        </div>
+        <div class="live-command-actions">
+          <button class="btn-primary btn-sm" id="dashboard-live-location">📍 Sync My Area</button>
+          <button class="btn-secondary btn-sm" id="dashboard-open-community">Open Live Map</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function hydrateDashboardLiveContext() {
+    document.getElementById('dashboard-open-community')?.addEventListener('click', () => NexusApp.navigate('community'));
+    document.getElementById('dashboard-live-location')?.addEventListener('click', loadDashboardLiveContext);
+  }
+
+  async function loadDashboardLiveContext() {
+    if (!window.ZenoLive) {
+      NexusApp.showToast('Live integrations are unavailable in this browser session', 'error');
+      return;
+    }
+
+    const status = document.getElementById('dashboard-live-status');
+    const metrics = document.getElementById('dashboard-live-metrics');
+    const button = document.getElementById('dashboard-live-location');
+
+    try {
+      if (button) button.disabled = true;
+      if (status) status.textContent = 'Requesting location and syncing live signals...';
+
+      const location = await ZenoLive.getCurrentPosition();
+      const label = await ZenoLive.reverseGeocode(location.lat, location.lon);
+      if (label) location.label = label;
+
+      const [weatherResult, resourcesResult] = await Promise.allSettled([
+        ZenoLive.fetchWeather(location.lat, location.lon),
+        ZenoLive.fetchResources(location.lat, location.lon, 6000)
+      ]);
+
+      const weather = weatherResult.status === 'fulfilled' ? weatherResult.value : null;
+      const resources = resourcesResult.status === 'fulfilled' ? resourcesResult.value : [];
+      ZenoLive.setCachedContext({ location, weather, resources });
+
+      if (status) status.textContent = location.label.split(',').slice(0, 3).join(', ');
+      if (metrics) {
+        metrics.innerHTML = `
+          <div class="live-command-metric">
+            <span>🌦️</span>
+            <strong>${weather ? `${weather.emoji} ${weather.temperature}°F · ${weather.label}` : 'Weather unavailable'}</strong>
+            <small>${weather?.rainChance !== null && weather?.rainChance !== undefined ? `${weather.rainChance}% rain chance` : 'Open-Meteo weather'}</small>
+          </div>
+          <div class="live-command-metric">
+            <span>🗺️</span>
+            <strong>${resources.length}</strong>
+            <small>nearby mapped resources</small>
+          </div>
+          <div class="live-command-metric">
+            <span>🕐</span>
+            <strong>${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</strong>
+            <small>last sync</small>
+          </div>
+        `;
+      }
+
+      NexusDB.addXP(10);
+      NexusApp.showToast('Live context synced! +10 XP 🌐', 'success');
+      NexusApp.updateNavStats();
+    } catch (err) {
+      if (status) status.textContent = err.message || 'Live sync failed. Try again or open the community map.';
+      NexusApp.showToast(err.message || 'Live sync failed', 'error');
+    } finally {
+      if (button) button.disabled = false;
+    }
   }
 
   return { render, afterRender };

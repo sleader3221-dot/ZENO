@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZENO app icon</title>
+  <desc id="desc">A glowing ZENO Z logo on a dark gradient background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="52" y1="30" x2="460" y2="482" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A0B1E"/>
+      <stop offset="0.48" stop-color="#16185A"/>
+      <stop offset="1" stop-color="#071F2A"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="107" y1="89" x2="405" y2="423" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00D4FF"/>
+      <stop offset="0.52" stop-color="#6C63FF"/>
+      <stop offset="1" stop-color="#FFD166"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.423 0 0 0 0 0.388 0 0 0 0 1 0 0 0 0.7 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="174" fill="none" stroke="url(#ring)" stroke-width="20" opacity="0.95" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="124" fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="2"/>
+  <path d="M172 160H346L205 352H350" fill="none" stroke="#FFFFFF" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M172 160H346L205 352H350" fill="none" stroke="url(#ring)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="382" cy="142" r="14" fill="#06D6A0"/>
+  <circle cx="131" cy="366" r="11" fill="#FFD166"/>
+</svg>
