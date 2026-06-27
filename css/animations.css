@@ -1,0 +1,300 @@
+/* ===================================================
+   NEXUS — Animations & Transitions
+   =================================================== */
+
+/* ─── Keyframes ─────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.97); }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(108, 99, 255, 0); }
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes msgSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+@keyframes xpFloat {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  50% { opacity: 1; transform: translate(-50%, -60%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -80%) scale(0.8); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(108, 99, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(108, 99, 255, 0.6); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes streakFlame {
+  0%, 100% { transform: scaleY(1) rotate(-2deg); }
+  50% { transform: scaleY(1.1) rotate(2deg); }
+}
+
+@keyframes badgeUnlock {
+  0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes progressGrow {
+  from { width: 0; }
+}
+
+@keyframes chartBar {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to { transform: scaleY(1); transform-origin: bottom; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes ripple {
+  from { transform: scale(0); opacity: 0.6; }
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  56% { transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── Animation Utility Classes ─────────────────────── */
+.animate-fade-in { animation: fadeIn 0.4s var(--ease) forwards; }
+.animate-fade-in-up { animation: fadeInUp 0.5s var(--ease) forwards; }
+.animate-fade-in-down { animation: fadeInDown 0.4s var(--ease) forwards; }
+.animate-scale-in { animation: scaleIn 0.3s var(--ease-spring) forwards; }
+.animate-slide-down { animation: slideDown 0.3s var(--ease) forwards; }
+
+/* Stagger animations for lists */
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 60ms; }
+.stagger > *:nth-child(3) { animation-delay: 120ms; }
+.stagger > *:nth-child(4) { animation-delay: 180ms; }
+.stagger > *:nth-child(5) { animation-delay: 240ms; }
+.stagger > *:nth-child(6) { animation-delay: 300ms; }
+.stagger > *:nth-child(7) { animation-delay: 360ms; }
+.stagger > *:nth-child(8) { animation-delay: 420ms; }
+
+/* ─── Shimmer / Skeleton Loading ────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+.skeleton-text { height: 14px; margin-bottom: 8px; }
+.skeleton-text-sm { height: 10px; }
+.skeleton-circle { border-radius: 50%; }
+
+/* ─── Hover Lift Effect ─────────────────────────────── */
+.hover-lift {
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── Glow Effects ──────────────────────────────────── */
+.glow-purple { animation: glowPulse 3s ease-in-out infinite; }
+.glow-teal { animation: glowPulse 3s ease-in-out infinite; box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+
+/* ─── Breathing Animation (for grounding exercises) ── */
+.breathing-circle {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.3), rgba(0, 212, 255, 0.1));
+  border: 2px solid rgba(108, 99, 255, 0.4);
+}
+.breathing-circle.inhale { animation: breathe 4s ease-in-out; }
+.breathing-circle.exhale { animation: breathe 6s ease-in-out reverse; }
+
+/* ─── Page Transition ───────────────────────────────── */
+.page-enter {
+  animation: fadeInUp 0.4s var(--ease) forwards;
+}
+.page-exit {
+  animation: fadeIn 0.2s var(--ease) reverse forwards;
+}
+
+/* ─── Floating Elements ─────────────────────────────── */
+.float-1 { animation: floatUp 3s ease-in-out infinite; }
+.float-2 { animation: floatUp 3s ease-in-out infinite 1s; }
+.float-3 { animation: floatUp 3s ease-in-out infinite 2s; }
+
+/* ─── Text Cursor (typing effect) ───────────────────── */
+.typing-cursor::after {
+  content: '|';
+  animation: pulse 0.8s step-end infinite;
+  color: var(--purple-light);
+}
+
+/* ─── Gradient Animated Background ──────────────────── */
+.gradient-bg-animated {
+  background: linear-gradient(270deg, #0a0b1e, #1a0a3e, #0a1e3e, #0a2018);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+/* ─── Card Entrance ─────────────────────────────────── */
+.card-enter {
+  opacity: 0;
+  animation: fadeInUp 0.5s var(--ease) forwards;
+}
+
+/* ─── Button Ripple ─────────────────────────────────── */
+.btn-primary, .btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after, .btn-secondary::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+.btn-primary.rippling::after, .btn-secondary.rippling::after {
+  animation: ripple 0.5s ease-out;
+}
+
+/* ─── Progress animation ────────────────────────────── */
+.progress-fill {
+  animation: progressGrow 1s var(--ease) forwards;
+}
+
+/* ─── Number counter animation ──────────────────────── */
+.count-animate {
+  animation: countUp 0.5s var(--ease) forwards;
+}
+
+/* ─── Streak flame ──────────────────────────────────── */
+.streak-flame {
+  display: inline-block;
+  animation: streakFlame 1.5s ease-in-out infinite;
+}
+
+/* ─── Badge unlock ──────────────────────────────────── */
+.badge-unlock {
+  animation: badgeUnlock 0.8s var(--ease-spring) forwards;
+}
+
+/* ─── Heartbeat (for crisis/wellness) ───────────────── */
+.heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+
+/* ─── Reduce Motion Preference ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
